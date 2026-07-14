@@ -1,0 +1,12 @@
+# Environment
+.env
+
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Media uploads
+media/course_videos/

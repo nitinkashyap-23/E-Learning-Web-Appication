@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/Courses_style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="course-hero">
+        <h1>Explore Our Courses</h1>
+        <p>Upgrade your skills with industry-level courses</p>
+    </section>
+    <section class="courses-container">
+        {% for course in courses %}
+
+        <div class="course-card">
+            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+            <div class="course-info">
+                <h3>{{ course.title }}</h3>
+                <p>{{ course.description }}</p>
+                <span class="course-meta">Duration: 8 Weeks</span>
+                <div class="course-buttons">
+                    <a href="{% url 'enroll_course' course.slug %}">
+                        <button class="enroll-btn">Enroll Now</button>
+                    </a>
+                    <a href="{% url 'course_detail' course.slug %}">
+                        <button class="view-btn">View Course</button>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}

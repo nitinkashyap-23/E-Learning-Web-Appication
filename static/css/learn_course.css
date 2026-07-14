@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.learn-page {
+    min-height: 100vh;
+    background: #F8FAFC;
+    padding: 50px 20px;
+}
+
+.video-section {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-container {
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin-bottom: 30px;
+}
+
+.custom-video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: black;
+}
+
+.course-video {
+    width: 100%;
+    max-height: 700px;
+    display: block;
+    outline: none;
+}
+
+/* 
+    FIX: Overlay now only covers top 80% of video wrapper height.
+    The bottom ~50px is where the browser's native controls bar lives
+    (seekbar, volume, fullscreen etc). By NOT covering that area,
+    the user can always interact with seek / forward / backward.
+    
+    Before: overlay was 100% height with pointer-events:none on wrapper
+    but pointer-events:auto on button — this caused inconsistent blocking.
+    Now: overlay simply doesn't exist over the controls area.
+*/
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px); /* leaves native controls bar free */
+    pointer-events: none;      /* overlay itself doesn't block clicks */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+    transition: opacity 0.3s;
+}
+
+#playPauseBtn {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    color: white;
+    font-size: 34px;
+    cursor: pointer;
+    pointer-events: auto;   /* button itself is clickable */
+    transition: 0.3s;
+}
+
+#playPauseBtn:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.3);
+}
+
+.video-details {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(10,38,71,0.08);
+}
+
+.video-details h1 {
+    color: #0A2647;
+    margin-bottom: 15px;
+    font-size: 38px;
+}
+
+.video-details p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.completed-badge {
+    background: #14B8A6;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.saving-badge {
+    background: #E2E8F0;
+    color: #475569;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: 0.3s;
+}
+.assessment-btn {
+    margin-top: 25px;
+    padding: 14px 35px;
+    background: linear-gradient(135deg, #0A2647, #144272);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 6px 20px rgba(10,38,71,0.3);
+    transition: all 0.3s ease;
+}
+
+.assessment-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(10,38,71,0.4);
+    background: linear-gradient(135deg, #144272, #205295);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 768px) {
+
+    .video-details h1 {
+        font-size: 28px;
+    }
+
+    #playPauseBtn {
+        width: 70px;
+        height: 70px;
+        font-size: 26px;
+    }
+}
+
+@media(max-width: 480px) {
+
+    .learn-page {
+        padding: 20px 10px;
+    }
+
+    .video-details {
+        padding: 20px;
+    }
+}

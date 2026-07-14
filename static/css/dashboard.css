@@ -1,0 +1,341 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-page{
+    background: #F8FAFC;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+/* HEADER */
+.dashboard-header{
+    margin-bottom: 40px;
+}
+
+.profile-card{
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 10px 30px rgba(10,38,71,0.08);
+}
+
+.profile-image{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#0A2647,#14B8A6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 35px;
+}
+
+.profile-info h1{
+    color: #0A2647;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.profile-info p{
+    color: #475569;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.profile-info span{
+    color: #14B8A6;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* STATS */
+.dashboard-stats{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.stat-card{
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(10,38,71,0.08);
+    transition: 0.3s;
+}
+
+.stat-card:hover{
+    transform: translateY(-5px);
+}
+
+.stat-card h2{
+    font-size: 40px;
+    color: #14B8A6;
+    margin-bottom: 10px;
+}
+
+.stat-card p{
+    color: #475569;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* COURSES */
+.dashboard-courses h2{
+    color: #0A2647;
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+.dashboard-course-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+}
+
+.dashboard-course-card{
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(10,38,71,0.08);
+    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+
+    max-width: 320px;
+}
+
+.dashboard-course-card:hover{
+    transform: translateY(-6px);
+}
+
+.dashboard-course-card img{
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    background: #f8fafc;
+    padding: 15px;
+}
+
+.dashboard-course-card h3{
+    color: #0A2647;
+    padding: 20px 20px 10px;
+    font-size: 22px;
+}
+
+.dashboard-course-card p{
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 20px 20px;
+
+    min-height: 90px;
+}
+
+.dashboard-course-card button{
+    margin: 0 20px 20px;
+
+    margin-top: auto;
+
+    width: calc(100% - 40px);
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(135deg,#0A2647,#14B8A6);
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.dashboard-course-card button:hover{
+    transform: translateY(-2px);
+}
+
+/* LOGOUT */
+.dashboard-logout{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.logout-btn{
+    padding: 14px 35px;
+    border: none;
+    border-radius: 10px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover{
+    background: #dc2626;
+}
+/* TESTIMONIAL SECTION */
+
+.testimonial-form-section{
+    margin-top: 60px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(10,38,71,0.08);
+}
+
+.testimonial-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.testimonial-header h2{
+    color: #0A2647;
+    font-size: 28px;
+}
+
+.toggle-testimonial-btn{
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0A2647,#14B8A6);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-testimonial-btn:hover{
+    transform: translateY(-2px);
+}
+
+.testimonial-form{
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.testimonial-form.active{
+    display: flex;
+}
+
+.testimonial-form input,
+.testimonial-form select,
+.testimonial-form textarea{
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #CBD5E1;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.testimonial-form textarea{
+    min-height: 140px;
+    resize: vertical;
+}
+
+.testimonial-form input:focus,
+.testimonial-form select:focus,
+.testimonial-form textarea:focus{
+    border-color: #14B8A6;
+    box-shadow: 0 0 0 3px rgba(20,184,166,0.1);
+}
+
+.submit-testimonial-btn{
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0A2647,#14B8A6);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-testimonial-btn:hover{
+    transform: translateY(-2px);
+}
+
+@media(max-width:768px){
+
+    .testimonial-header{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .toggle-testimonial-btn{
+        width: 100%;
+    }
+
+}
+
+.progress-bar-wrapper {
+    margin: 10px 0 15px 0;
+}
+ 
+.progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background: #E2E8F0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+ 
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0A2647, #14B8A6);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    min-width: 2px;
+}
+ 
+.progress-label {
+    font-size: 12px;
+    color: #64748B;
+    font-weight: 500;
+}
+ 
+.continue-btn {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #0A2647, #14B8A6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+ 
+.continue-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}

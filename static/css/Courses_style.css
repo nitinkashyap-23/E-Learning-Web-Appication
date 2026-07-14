@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Open Sans', Arial, sans-serif;
+}
+
+
+/* COURSES HERo */
+.course-hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #0A2647 0%, #1E4C7A 100%);
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+}
+
+.course-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M0 0 L100 100 M100 0 L0 100" stroke="white" stroke-width="1"/></svg>');
+    background-size: 30px 30px;
+}
+
+.course-hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.course-hero p {
+    font-size: 18px;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* COURSE GRID */
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 60px 40px;
+    background: #F8FAFC;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* COURSE CARD */
+.course-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(10, 38, 71, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hover Animation */
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(10, 38, 71, 0.12);
+}
+
+/* COURSE IMAGE */
+.course-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: #f8fafc;
+    padding: 15px;
+    transition: 0.5s;
+}
+
+.course-card:hover img {
+    transform: scale(1.05);
+}
+
+/* COURSE INFO */
+.course-info {
+    padding: 25px 20px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-info h3 {
+    color: #0A2647;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.course-info p {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    flex: 1;
+}
+
+.course-meta {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #0F766E;
+    background: rgba(20, 184, 166, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    align-self: flex-start;
+}
+
+/* BUTTON */
+.course-info button {
+    padding: 12px 20px;
+    border: none;
+    background: linear-gradient(135deg, #0A2647 0%, #1E4C7A 100%);
+    color: #FFFFFF;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.course-info button:hover {
+    background: #144272;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(10, 38, 71, 0.2);
+}
+.course-buttons{
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.view-btn,
+.enroll-btn{
+    width: 100%;
+}
+
+.enroll-btn{
+    background: linear-gradient(135deg, #14B8A6 0%, #0f766e 100%);
+}
+
+.enroll-btn:hover{
+    background: #0f766e;
+}
+

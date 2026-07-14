@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/assessment.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="assessment-page">
+
+    <!-- TOP BAR -->
+
+    <div class="assessment-top">
+
+        <h1>
+            {{ assessment.title }}
+        </h1>
+
+        <div class="timer" id="timer">
+            01:30:00
+        </div>
+
+    </div>
+
+    <!-- MAIN LAYOUT -->
+
+    <div class="assessment-layout">
+
+        <!-- LEFT SIDE -->
+
+        <div class="question-area">
+
+            <form method="POST"
+                  action="{% url 'submit_assessment' assessment.id %}"
+                  id="assessmentForm">
+
+                {% csrf_token %}
+
+                {% for question in questions %}
+
+                <div class="question-box {% if not forloop.first %}hidden{% endif %}"
+                     id="question-{{ forloop.counter0 }}">
+
+                    <h2>
+
+                        Q{{ forloop.counter }}.
+                        {{ question.question }}
+
+                    </h2>
+
+                    <label>
+
+                        <input type="radio"
+                               name="question{{ question.id }}"
+                               value="{{ question.option1 }}">
+
+                        {{ question.option1 }}
+
+                    </label>
+
+                    <label>
+
+                        <input type="radio"
+                               name="question{{ question.id }}"
+                               value="{{ question.option2 }}">
+
+                        {{ question.option2 }}
+
+                    </label>
+
+                    <label>
+
+                        <input type="radio"
+                               name="question{{ question.id }}"
+                               value="{{ question.option3 }}">
+
+                        {{ question.option3 }}
+
+                    </label>
+
+                    <label>
+
+                        <input type="radio"
+                               name="question{{ question.id }}"
+                               value="{{ question.option4 }}">
+
+                        {{ question.option4 }}
+
+                    </label>
+
+                </div>
+
+                {% endfor %}
+
+                <!-- NAVIGATION BUTTONS -->
+
+                <div class="nav-buttons">
+
+                    <button type="button"
+                            id="prevBtn">
+
+                        Previous
+
+                    </button>
+
+                    <button type="button"
+                            id="nextBtn">
+
+                        Save & Next
+
+                    </button>
+
+                    <button type="button"
+                            id="skipBtn">
+
+                        Skip
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="palette">
+
+            <h3>
+                Questions
+            </h3>
+
+            <div class="palette-grid">
+
+                {% for question in questions %}
+
+                <button type="button"
+                        class="palette-btn"
+                        onclick="goToQuestion('{{ forloop.counter0 }}')">
+
+                    {{ forloop.counter }}
+
+                </button>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+
+            <button type="submit"
+                    form="assessmentForm"
+                    class="submit-exam-btn">
+
+                Submit Exam
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let currentQuestion = 0;
+
+const questions =
+document.querySelectorAll(".question-box");
+
+const paletteBtns =
+document.querySelectorAll(".palette-btn");
+
+/* SHOW QUESTION */
+
+function showQuestion(index){
+
+    questions.forEach((question) => {
+
+        question.classList.add("hidden");
+
+    });
+
+    questions[index].classList.remove("hidden");
+
+    currentQuestion = index;
+
+    updatePaletteActive();
+
+}
+
+/* ACTIVE QUESTION */
+
+function updatePaletteActive(){
+
+    paletteBtns.forEach((btn) => {
+
+        btn.classList.remove("current-question");
+
+    });
+
+    paletteBtns[currentQuestion]
+    .classList.add("current-question");
+
+}
+
+/* MARK ANSWERED */
+
+function markAnswered(){
+
+    const currentBox =
+    questions[currentQuestion];
+
+    const checked =
+    currentBox.querySelector(
+        "input[type='radio']:checked"
+    );
+
+    if(checked){
+
+        paletteBtns[currentQuestion]
+        .classList.add("answered");
+
+    }
+
+}
+
+/* NEXT BUTTON */
+
+document.getElementById("nextBtn")
+.addEventListener("click", () => {
+
+    markAnswered();
+
+    if(currentQuestion < questions.length - 1){
+
+        showQuestion(currentQuestion + 1);
+
+    }
+
+});
+
+/* PREVIOUS BUTTON */
+
+document.getElementById("prevBtn")
+.addEventListener("click", () => {
+
+    if(currentQuestion > 0){
+
+        showQuestion(currentQuestion - 1);
+
+    }
+
+});
+
+/* SKIP BUTTON */
+
+document.getElementById("skipBtn")
+.addEventListener("click", () => {
+
+    if(currentQuestion < questions.length - 1){
+
+        showQuestion(currentQuestion + 1);
+
+    }
+
+});
+
+/* QUESTION PALETTE NAVIGATION */
+
+function goToQuestion(index){
+
+    showQuestion(Number(index));
+
+}
+
+/* TIMER */
+
+let totalSeconds = 90 * 60;
+
+const timer =
+document.getElementById("timer");
+
+function updateTimer(){
+
+    const hours =
+    Math.floor(totalSeconds / 3600);
+
+    const minutes =
+    Math.floor((totalSeconds % 3600) / 60);
+
+    const seconds =
+    totalSeconds % 60;
+
+    timer.innerHTML =
+    `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+
+    if(totalSeconds > 0){
+
+        totalSeconds--;
+
+    }
+
+    else{
+
+        alert("Time Up! Exam Submitted.");
+
+        document.getElementById("assessmentForm").submit();
+
+    }
+
+}
+
+setInterval(updateTimer, 1000);
+
+updatePaletteActive();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/assessment_result.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="result-page">
+
+    <div class="result-card">
+
+        <h1>
+            Assessment Result
+        </h1>
+
+        <div class="result-score">
+            {{ score }}%
+        </div>
+
+        {% if passed %}
+
+            <div class="pass-text">
+                ✅ You Passed
+            </div>
+
+            <a href="{% url 'download_certificate' assessment.course.id %}"
+               class="result-btn">
+
+                Download Certificate
+
+            </a>
+
+        {% else %}
+
+            <div class="fail-text">
+                ❌ You Failed
+            </div>
+
+            <a href="{% url 'assessment_page' assessment.id %}"
+               class="result-btn">
+
+                Retry Assessment
+
+            </a>
+
+        {% endif %}
+
+        <!-- AI ANALYSIS -->
+
+        <div class="analysis-section">
+
+            <h2>
+                AI Performance Analysis
+            </h2>
+
+            <div class="analysis-box">
+
+                <h3>
+                    ✅ Strong Areas
+                </h3>
+
+                <ul>
+
+                    {% for topic in strong_topics %}
+
+                        <li>{{ topic }}</li>
+
+                    {% empty %}
+
+                        <li>No strong topics detected</li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+            <div class="analysis-box">
+
+                <h3>
+                    ❌ Weak Areas
+                </h3>
+
+                <ul>
+
+                    {% for topic in weak_topics %}
+
+                        <li>{{ topic }}</li>
+
+                    {% empty %}
+
+                        <li>No weak topics detected</li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

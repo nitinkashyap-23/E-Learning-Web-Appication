@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/learn_course.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="learn-page">
+
+    <section class="video-section">
+
+        <div class="video-container">
+            <div class="custom-video-wrapper">
+
+                <video
+                    id="courseVideo"
+                    class="course-video"
+                    preload="auto"
+                    controls
+                >
+                    <source src="{{ video.video_file.url }}" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+
+            </div>
+        </div>
+
+        <div class="video-details">
+
+            <h1>{{ course.title }}</h1>
+            <p>{{ course.description }}</p>
+
+
+            {% if assessment %}
+            <a href="{% url 'assessment_page' assessment.id %}">
+                <button class="assessment-btn">Start Final Assessment</button>
+            </a>
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+
+const video = document.getElementById("courseVideo");
+const savingStatus = null;
+const savedTime = {{ progress.watched_seconds|default:0 }};
+
+// ── RESUME: wait until enough data is loaded, then seek ──
+let resumed = false;
+
+function tryResume() {
+    if (resumed || savedTime <= 0) return;
+    if (video.readyState >= 2) {   // HAVE_CURRENT_DATA or better
+        video.currentTime = savedTime;
+        resumed = true;
+    }
+}
+
+video.addEventListener("loadedmetadata", tryResume);
+video.addEventListener("loadeddata", tryResume);
+video.addEventListener("canplay", tryResume);
+
+// fallback: keep trying every 200ms for 5 seconds
+const resumeInterval = setInterval(function() {
+    if (resumed || savedTime <= 0) {
+        clearInterval(resumeInterval);
+        return;
+    }
+    tryResume();
+}, 200);
+setTimeout(function() { clearInterval(resumeInterval); }, 5000);
+
+// ── SAVE PROGRESS every 5 seconds ──
+setInterval(function() {
+    const currentSec = Math.floor(video.currentTime);
+    if (currentSec === 0) return;
+
+    fetch("/save-progress/{{ course.slug }}/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: "watched_seconds=" + currentSec + "&completed=" + (video.ended ? "true" : "false")
+    })
+    .then(function(res) { return res.json(); })
+    .then(function() {
+        if (savingStatus) {
+            savingStatus.textContent = "✅ Saved!";
+            setTimeout(function() {
+                savingStatus.textContent = "💾 Progress Saved Automatically";
+            }, 1500);
+        }
+    });
+
+}, 5000);
+
+// ── SAVE immediately when video ends ──
+video.addEventListener("ended", function() {
+    fetch("/save-progress/{{ course.slug }}/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: "watched_seconds=" + Math.floor(video.duration) + "&completed=true"
+    })
+    .then(function() {
+        window.location.reload();
+    });
+});
+
+</script>
+
+{% endblock %}

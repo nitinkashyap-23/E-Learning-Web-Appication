@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/index_style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+<!-- Hero Section -->
+<section class="hero">
+
+    <!-- VIDEO BACKGROUND -->
+    <video autoplay muted loop class="hero-video">
+        <source src="{% static 'videos/Heroimg.mp4' %}" type="video/mp4">
+    </video>
+
+    <div class="hero-text">
+        <h1>Learn Skills Online</h1>
+        <p>Join thousands of students learning programming, design, and technology from expert instructors.</p>
+        <a href="{% url 'courses' %}">
+            <button class="hero-btn">Start Learning</button>
+        </a>
+    </div>
+
+</section>
+<!-- Popular Courses -->
+<section class="courses">
+    <h2>Popular Courses</h2>
+
+    <div class="course-container">
+
+        <div class="course-card">
+            <i class="fa-solid fa-code"></i>
+            <h3>Web Development</h3>
+            <p>Learn HTML, CSS, JavaScript and build real websites.</p>
+        </div>
+
+        <div class="course-card">
+            <i class="fa-brands fa-python"></i>
+            <h3>Python Programming</h3>
+            <p>Master Python for automation, AI and backend development.</p>
+        </div>
+
+        <div class="course-card">
+             <i class="fa-solid fa-database"></i>
+            <h3>Data Science</h3>
+            <p>Learn data analysis, machine learning and visualization.</p>
+        </div>
+
+        <div class="course-card">
+             <i class="fa-brands fa-js"></i>
+            <h3>JavaScript</h3>
+            <p>Build interactive web applications with modern JavaScript.</p>
+        </div>
+
+    </div>
+</section>
+<!-- Why Choose Us -->
+<section class="features">
+
+    <h2>Why Learn With Us</h2>
+
+    <div class="feature-container">
+
+        <div class="feature">
+            <i class="fa-solid fa-user-graduate"></i>
+            <h3>Expert Instructors</h3>
+            <p>Learn from industry professionals.</p>
+        </div>
+
+        <div class="feature">
+            <i class="fa-solid fa-laptop"></i>
+            <h3>Learn Anywhere</h3>
+            <p>Access courses from laptop, tablet or mobile.</p>
+        </div>
+
+        <div class="feature">
+            <i class="fa-solid fa-video"></i>
+            <h3>High-Quality Video Lessons</h3>
+            <p>HD video lessons with downloadable resources and subtitles</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials">
+    <div class="testimonials-header">
+        <h2>What Our Students Say</h2>
+        <p>Real stories from real learners</p>
+    </div>
+    <div class="testimonial-container">
+
+    {% for testimonial in testimonials %}
+
+    <div class="testimonial-card">
+
+        <div class="quote-icon">
+            <i class="fa-solid fa-quote-left"></i>
+        </div>
+
+        <p class="testimonial-text">
+            "{{ testimonial.message }}"
+        </p>
+
+        <div class="student-info">
+
+            <div class="student-avatar">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+
+            <div class="student-details">
+
+                <h4>
+                    {{ testimonial.user.username }}
+                </h4>
+
+                <p>
+                    {{ testimonial.profession }}
+                </p>
+
+                <div class="rating">
+
+                    {% for i in "12345" %}
+
+                        {% if forloop.counter <= testimonial.rating %}
+
+                            <i class="fa-solid fa-star"></i>
+
+                        {% else %}
+
+                            <i class="fa-regular fa-star"></i>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+                <span class="testimonial-date">
+
+                    {{ testimonial.created_at|timesince }} ago
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <p>
+        No testimonials available yet.
+    </p>
+
+    {% endfor %}
+
+</div>
+</section>
+</main>
+{% endblock %}

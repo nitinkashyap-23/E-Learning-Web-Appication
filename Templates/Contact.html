@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/Contact_style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<main>
+    <!-- CONTACT HERO SECTION -->
+    <section class="contact-hero">
+        <h1>Contact Us</h1>
+        <p>Have questions? We'd love to hear from you. Our team typically responds within 24 hours.</p>
+    </section>
+
+    <!-- CONTACT INFORMATION & FORM SECTION -->
+    <section class="contact-container">
+        
+        <!-- LEFT SIDE - CONTACT INFO -->
+        <div class="contact-info">
+            <h2>Get In Touch</h2>
+            <p class="contact-description">If you have any questions about courses, pricing, or need technical support, feel free to reach out to us.</p>
+            
+            <div class="info-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <h4>Email</h4>
+                    <p>nitinkashyap2424@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+91 8888888888</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                    <h4>Working Hours</h4>
+                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+            
+            <div class="info-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <h4>Location</h4>
+                    <p>India</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE - CONTACT FORM -->
+        <form class="contact-form" method="POST" action="">
+            {% csrf_token %}
+            <h2>Send Us a Message</h2>
+            
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" placeholder="Username@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Course Inquiry">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" placeholder="I'd like to know more about..." rows="5" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fa-solid fa-paper-plane"></i> Send Message
+            </button>
+            {% if success %}
+            <p style="color: green; margin-top: 15px;">
+    ✅ Message sent successfully! We will contact you soon.
+    </p>
+    {% endif %}
+        </form>
+    </section>
+
+
+</main>
+{% endblock %}

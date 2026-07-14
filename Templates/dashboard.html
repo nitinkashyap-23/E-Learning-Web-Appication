@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<main class="dashboard-page">
+
+    <!-- Profile Card -->
+    <section class="dashboard-header">
+        <div class="profile-card">
+            <div class="profile-image">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1>{{ user.username }}</h1>
+                <p>{{ user.email }}</p>
+                <span>Joined: {{ user.date_joined|date:"F d, Y" }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats — now using real data -->
+    <section class="dashboard-stats">
+
+        <div class="stat-card">
+            <h2>{{ total_courses }}</h2>
+            <p>Enrolled Courses</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ completed_count }}</h2>
+            <p>Completed</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ overall_percent }}%</h2>
+            <p>Overall Progress</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ certificates_count }}</h2>
+            <p>Certificates</p>
+        </div>
+
+    </section>
+
+    <!-- My Courses — with progress bar + resume from where left -->
+    <section class="dashboard-courses">
+
+        <h2>My Courses</h2>
+
+        <div class="dashboard-course-grid">
+
+            {% for item in courses_with_progress %}
+
+            <div class="dashboard-course-card">
+
+                <img src="{{ item.course.image.url }}" alt="{{ item.course.title }}">
+
+                <h3>{{ item.course.title }}</h3>
+
+                <p>{{ item.course.description }}</p>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar-wrapper">
+
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill"
+                        style="width: {{ item.percent|default:0 }}%">
+                    </div>
+                    </div>
+
+                    <span class="progress-label">
+                        {% if item.progress.completed %}
+                            ✅ Completed
+                        {% elif item.progress.watched_seconds > 0 %}
+                            {{ item.percent }}% watched
+                        {% else %}
+                            Not started
+                        {% endif %}
+                    </span>
+
+                </div>
+
+                <!-- 
+                    KEY FIX: Button now goes to 'learn' URL directly
+                    NOT course_detail — so video loads with resume position
+                -->
+                <a href="{% url 'learn_course' item.course.slug %}">
+                    <button class="continue-btn">
+                        {% if item.progress.watched_seconds > 0 and not item.progress.completed %}
+                            ▶ Continue Learning
+                        {% elif item.progress.completed %}
+                            🔁 Watch Again
+                        {% else %}
+                            ▶ Start Learning
+                        {% endif %}
+                    </button>
+                </a>
+
+            </div>
+
+            {% empty %}
+
+            <p>You have not enrolled in any courses yet.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- Testimonial Form -->
+    <section class="testimonial-form-section">
+
+        <div class="testimonial-header">
+            <h2>Share Your Experience</h2>
+            <button id="toggleTestimonialBtn" class="toggle-testimonial-btn">
+                {% if testimonial %}Edit Testimonial{% else %}Add Testimonial{% endif %}
+            </button>
+        </div>
+
+        <form method="POST" class="testimonial-form" id="testimonialForm">
+
+            {% csrf_token %}
+
+            <input type="text" name="profession"
+                   placeholder="Your Profession"
+                   value="{{ testimonial.profession }}" required>
+
+            <select name="rating" required>
+                <option value="">Select Rating</option>
+                <option value="5" {% if testimonial.rating == 5 %}selected{% endif %}>⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4" {% if testimonial.rating == 4 %}selected{% endif %}>⭐⭐⭐⭐ Very Good</option>
+                <option value="3" {% if testimonial.rating == 3 %}selected{% endif %}>⭐⭐⭐ Good</option>
+                <option value="2" {% if testimonial.rating == 2 %}selected{% endif %}>⭐⭐ Average</option>
+                <option value="1" {% if testimonial.rating == 1 %}selected{% endif %}>⭐ Poor</option>
+            </select>
+
+            <textarea name="message"
+                      placeholder="Write your experience..."
+                      required>{{ testimonial.message }}</textarea>
+
+            <button type="submit" class="submit-testimonial-btn">
+                Submit Testimonial
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- Logout -->
+    <section class="dashboard-logout">
+        <a href="{% url 'logout' %}">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </section>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{% static 'css/course_detail.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<main>
+
+<section class="course-hero">
+    <div class="hero-container">
+
+        <div class="course-hero-content">
+            <h1>{{ course.title }}</h1>
+            <p>{{ course.description }}</p>
+
+            <div class="course-meta-info">
+                <span><i class="fa-regular fa-clock"></i> {{ detail.duration }}</span>
+                <span><i class="fa-solid fa-signal"></i> {{ detail.level }}</span>
+                <span><i class="fa-regular fa-user"></i> {{ detail.students }}</span>
+            </div>
+
+            <div class="hero-buttons">
+                {% if not enrolled %}
+
+                <button class="demo-btn" onclick="showEnrollPopup()">
+                    <i class="fa-regular fa-circle-play"></i>
+                    Watch Video
+                </button>
+                {% elif video_exists %}
+                <a href="{% url 'learn_course' course.slug %}">
+                    <button class="demo-btn">
+                        <i class="fa-regular fa-circle-play"></i>
+                        Watch Video
+                    </button>
+                </a>
+                {% else %}
+                <button class="demo-btn" onclick="showVideoPopup()">
+                    <i class="fa-regular fa-circle-play"></i>
+                    Watch Video
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="course-hero-pic">
+           <img src="{{ course.image.url }}">
+        </div>
+
+    </div>
+</section>
+    <section class="course-overview">
+            <div class="course-container">
+                <div class="overview-grid">
+                    <div class="overview-left">
+                        <h2>What You'll Learn</h2>
+                        <div class="learning-outcomes">
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_1 }}</span>
+                            </div>
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_2 }}</span>
+                            </div>
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_3 }}</span>
+                            </div>
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_4 }}</span>
+                            </div>
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_5 }}</span>
+                            </div>
+                            <div class="outcome-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>{{ detail.learn_6 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-right">
+                        <div class="course-highlight">
+                            <i class="fa-solid fa-medal"></i>
+                            <div>
+                                <h4>Certificate of Completion</h4>
+                                <p>Get certified and boost your resume</p>
+                            </div>
+                        </div>
+                        <div class="course-highlight">
+                            <i class="fa-solid fa-infinity"></i>
+                            <div>
+                                <h4>Lifetime Access</h4>
+                                <p>Learn at your own pace, anytime</p>
+                            </div>
+                        </div>
+                        <div class="course-highlight">
+                            <i class="fa-solid fa-headset"></i>
+                            <div>
+                                <h4>24/7 Support</h4>
+                                <p>Dedicated mentor assistance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<script>
+function showEnrollPopup() {
+
+    Swal.fire({
+        icon: "warning",
+        title: "Enrollment Required",
+        text: "Please enroll in this course before watching the videos.",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0d6efd"
+    });
+
+}
+
+</script>
+<script>
+function showVideoPopup() {
+
+    Swal.fire({
+        icon: "info",
+        title: "Course Content Coming Soon",
+        text: "The learning videos for this course are currently being prepared and will be available soon.",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0d6efd"
+    });
+
+}
+</script>
+</main>
+{% endblock %}
