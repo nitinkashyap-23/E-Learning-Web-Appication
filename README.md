@@ -16,11 +16,20 @@ An AI-powered e-learning platform built with Django that enables students to enr
 - Student dashboard
 - Responsive user interface
 
-# Tech Stack 
+## Tech Stack 
 
 - Programming Language : Python 
 - Backend framework : Django
 - Frontend : HTML,CSS,Javascript
-- Responsive UI : Bootstarp
+- Responsive UI : Bootstrap
 - Database : SQLite
 - AI Assessment Generation : Google Gemini API
+
+## Author
+
+**Nitin Kashyap**
+
+MCA Student | Django Developer
+
+GitHub: https://github.com/nitinkashyap-23
+
