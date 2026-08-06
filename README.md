@@ -32,4 +32,4 @@ An AI-powered e-learning platform built with Django that enables students to enr
 MCA Student | Django Developer
 
 GitHub: https://github.com/nitinkashyap-23
-
+Linked-in : www.linkedin.com/in/nitin-kumar-52157a360
