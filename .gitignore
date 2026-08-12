@@ -1,5 +1,6 @@
 # Environment
 .env
+venv/
 
 # Database
 db.sqlite3
@@ -10,3 +11,5 @@ __pycache__/
 
 # Media uploads
 media/course_videos/
+
+staticfiles/
