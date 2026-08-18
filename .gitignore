@@ -13,3 +13,5 @@ __pycache__/
 media/course_videos/
 
 staticfiles/
+
+data.json
